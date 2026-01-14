@@ -1,12 +1,11 @@
 const CACHE_NAME = 'resto-cache-v1';
 const PRECACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/icon-192.svg',
-  '/icons/icon-512.svg'
+  'index.html',
+  'manifest.json',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+  'icons/icon-192.svg',
+  'icons/icon-512.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -32,7 +31,7 @@ self.addEventListener('fetch', event => {
   // Navigation requests -> serve cached index.html (app shell)
   if (req.mode === 'navigate') {
     event.respondWith(
-      caches.match('/index.html').then(cached => cached || fetch(req).catch(() => cached))
+      caches.match('index.html').then(cached => cached || fetch(req).catch(() => cached))
     );
     return;
   }
@@ -41,6 +40,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(req).then(cached => {
       const network = fetch(req).then(resp => {
+        // update cache for same-origin resources
         if (req.url.startsWith(self.location.origin)) {
           caches.open(CACHE_NAME).then(cache => cache.put(req, resp.clone()));
         }
