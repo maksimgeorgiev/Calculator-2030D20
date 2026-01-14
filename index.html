@@ -9,37 +9,56 @@
   <meta name="apple-mobile-web-app-title" content="Ресто Калькулатор" />
   <title>Ресто — Калкулатор</title>
 
+  <!-- Static manifest and iOS icon -->
   <link rel="manifest" href="/manifest.json">
-  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <!-- iOS splash (optional) and theme -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0f172a"/>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
   <script>
-    window.tailwind = { config: { theme: { extend: { colors: { navy1: '#0f172a', navy2: '#020617', gold: { 400: '#f6c84c', 500: '#eab308' }, glass: 'rgba(255,255,255,0.06)' }, fontFamily: { display: ['Rubik','system-ui','sans-serif'], body: ['Inter','system-ui','sans-serif'] }, boxShadow:{ 'deep-lg':'0 20px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02)'}, borderRadius:{'xl-xl':'24px'} } } } };
+    window.tailwind = {
+      config: {
+        theme: {
+          extend: {
+            colors: { navy1: '#0f172a', navy2: '#020617', gold: {400:'#f6c84c',500:'#eab308'}, glass: 'rgba(255,255,255,0.06)'},
+            fontFamily: { display: ['Rubik','system-ui','sans-serif'], body: ['Inter','system-ui','sans-serif']},
+            boxShadow: { 'deep-lg': '0 20px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02)' },
+            borderRadius: { 'xl-xl': '24px' }
+          }
+        }
+      }
+    };
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     :root { --rate: 1.95583; }
-    html,body { height: 100%; background: linear-gradient(180deg,#0f172a 0%, #020617 100%); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    html,body { height:100%; background: linear-gradient(180deg,#0f172a 0%, #020617 100%); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
     .app-window { backdrop-filter: blur(8px) saturate(110%); -webkit-backdrop-filter: blur(8px) saturate(110%); }
-    .card { border-radius: 20px; box-shadow: 0 18px 40px rgba(2,6,23,0.72), inset 0 1px 0 rgba(255,255,255,0.02); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006)); border: 1px solid rgba(255,255,255,0.04); }
+    .card { border-radius:20px; box-shadow:0 18px 40px rgba(2,6,23,0.72), inset 0 1px 0 rgba(255,255,255,0.02); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006)); border:1px solid rgba(255,255,255,0.04); }
     @keyframes appearUp { from { opacity:0; transform: translateY(8px) scale(.995); } to { opacity:1; transform: translateY(0) scale(1); } }
-    @keyframes floatXY { 0% { transform: translate3d(0,0,0) rotate(0) scale(1); } 50% { transform: translate3d(6px,-6px,0) rotate(3deg) scale(1.02); } 100% { transform: translate3d(0,0,0) rotate(0) scale(1); } }
+    @keyframes floatXY { 0%{transform:translate3d(0,0,0) rotate(0) scale(1);} 50%{transform:translate3d(6px,-6px,0) rotate(3deg) scale(1.02);} 100%{transform:translate3d(0,0,0) rotate(0) scale(1);} }
     input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    .seg-btn { transition: all .18s ease; } .seg-btn.active { background: linear-gradient(90deg,#0ea5a9, #fbbf24); color: #041025; box-shadow: 0 6px 18px rgba(234,179,8,.12); }
-    .pattern-cell { opacity: 0.08; color: #9ca3b3; font-size: 18px; display:flex; align-items:center; justify-content:center; }
-    .pattern-cell .symbol { transform-origin: center; animation: floatXY 6s ease-in-out infinite; }
-    .pattern-grid { pointer-events: none; }
-    .error-box { background: linear-gradient(90deg,#7f1d1d, #991b1b); color: #fff; border-radius: 12px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(153,27,27,0.24); }
-    @media (max-width:640px) { .card { margin: 18px; } }
+    .seg-btn { transition: all .18s ease; } .seg-btn.active { background: linear-gradient(90deg,#0ea5a9,#fbbf24); color:#041025; box-shadow:0 6px 18px rgba(234,179,8,.12); }
+    .pattern-cell { opacity:0.08; color:#9ca3b3; font-size:18px; display:flex; align-items:center; justify-content:center; }
+    .pattern-cell .symbol { transform-origin:center; animation: floatXY 6s ease-in-out infinite; }
+    .pattern-grid { pointer-events:none; }
+    .error-box { background: linear-gradient(90deg,#7f1d1d,#991b1b); color:#fff; border-radius:12px; padding:10px 12px; box-shadow:0 8px 24px rgba(153,27,27,0.24); }
+    @media (max-width:640px) { .card { margin:18px; } }
   </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
+
+  <!-- Decorative pattern -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
     <div class="w-full h-full grid grid-cols-6 gap-6 p-8 pattern-grid"></div>
   </div>
+
   <main class="relative w-full max-w-xl mx-auto">
     <div class="card app-window p-6 md:p-8">
       <header class="flex items-center gap-4 mb-4">
@@ -47,46 +66,90 @@
           <svg width="44" height="44" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden>
             <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#eab308"/></linearGradient></defs>
             <rect x="0" y="0" width="64" height="64" rx="12" fill="url(#g1)"/>
-            <g transform="translate(8,8)" fill="#041025" font-family="Rubik, sans-serif" font-weight="700" font-size="26"><text x="2" y="26">€</text><text x="28" y="26" font-size="20">лв</text></g>
+            <g transform="translate(8,8)" fill="#041025" font-family="Rubik, sans-serif" font-weight="700" font-size="26">
+              <text x="2" y="26">€</text>
+              <text x="28" y="26" font-size="20">лв</text>
+            </g>
           </svg>
         </div>
-        <div class="flex-1"><h1 class="font-display text-white text-lg leading-tight" style="font-family:Rubik, sans-serif;">Ресто</h1><p class="text-gray-300 text-sm mt-0.5" style="font-family:Inter, sans-serif;">Лесно и бързо — BGN ⇄ EUR</p></div>
+
+        <div class="flex-1">
+          <h1 class="font-display text-white text-lg leading-tight" style="font-family:Rubik, sans-serif;">Ресто</h1>
+          <p class="text-gray-300 text-sm mt-0.5" style="font-family:Inter, sans-serif;">Лесно и бързо — BGN ⇄ EUR</p>
+        </div>
       </header>
 
       <section class="space-y-4" aria-labelledby="calc-title">
         <label id="calc-title" class="sr-only">Калкулатор на ресто</label>
+
         <div class="grid grid-cols-12 gap-3 items-center">
           <div class="col-span-8">
             <label class="text-gray-300 text-sm mb-1 block">Сума за плащане</label>
-            <input id="amount" inputmode="decimal" type="number" step="0.01" min="0" class="w-full py-3 px-3 rounded-lg bg-[#e5e7eb] text-gray-900 font-medium focus:outline-none" placeholder="0.00" aria-label="Сума за плащане" />
+            <input id="amount" inputmode="decimal" type="number" step="0.01" min="0"
+                   class="w-full py-3 px-3 rounded-lg bg-[#e5e7eb] text-gray-900 font-medium focus:outline-none"
+                   placeholder="0.00" aria-label="Сума за плащане" />
           </div>
+
           <div class="col-span-4">
             <label class="text-gray-300 text-sm mb-1 block">Валута</label>
-            <select id="amount-currency" class="w-full py-3 px-2 rounded-lg bg-[#0b1220] text-white"><option value="BGN">BGN (лв)</option><option value="EUR">EUR (€)</option></select>
+            <select id="amount-currency" class="w-full py-3 px-2 rounded-lg bg-[#0b1220] text-white">
+              <option value="BGN">BGN (лв)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
           </div>
         </div>
 
         <div class="grid grid-cols-12 gap-3">
-          <div class="col-span-6"><label class="text-gray-300 text-sm mb-1 block">Платено в лв</label><input id="paid-bgn" inputmode="decimal" type="number" step="0.01" min="0" class="w-full py-3 px-3 rounded-lg bg-[#0f172a] text-white border border-transparent focus:outline-none" placeholder="0.00" /></div>
-          <div class="col-span-6"><label class="text-gray-300 text-sm mb-1 block">Платено в €</label><input id="paid-eur" inputmode="decimal" type="number" step="0.01" min="0" class="w-full py-3 px-3 rounded-lg bg-[#0f172a] text-white border border-transparent focus:outline-none" placeholder="0.00" /></div>
+          <div class="col-span-6">
+            <label class="text-gray-300 text-sm mb-1 block">Платено в лв</label>
+            <input id="paid-bgn" inputmode="decimal" type="number" step="0.01" min="0"
+                   class="w-full py-3 px-3 rounded-lg bg-[#0f172a] text-white border border-transparent focus:outline-none"
+                   placeholder="0.00" />
+          </div>
+
+          <div class="col-span-6">
+            <label class="text-gray-300 text-sm mb-1 block">Платено в €</label>
+            <input id="paid-eur" inputmode="decimal" type="number" step="0.01" min="0"
+                   class="w-full py-3 px-3 rounded-lg bg-[#0f172a] text-white border border-transparent focus:outline-none"
+                   placeholder="0.00" />
+          </div>
         </div>
 
-        <div id="error" class="hidden"><div class="error-box text-sm" role="alert"></div></div>
+        <div id="error" class="hidden">
+          <div class="error-box text-sm" role="alert"></div>
+        </div>
 
         <div id="result-area" class="mt-2">
           <div class="flex items-center justify-between">
             <div>
               <p class="text-gray-300 text-sm">Ресто</p>
-              <div id="resto-box" class="mt-2 p-4 rounded-lg bg-gradient-to-r from-transparent to-transparent" style="min-height:56px; display:flex; align-items:center;"><div class="flex items-center gap-4"><div id="resto-amount" class="text-white text-2xl font-semibold"></div><div id="resto-secondary" class="text-gray-300 text-sm"></div></div></div>
+              <div id="resto-box" class="mt-2 p-4 rounded-lg bg-gradient-to-r from-transparent to-transparent" style="min-height:56px; display:flex; align-items:center;">
+                <div class="flex items-center gap-4">
+                  <div id="resto-amount" class="text-white text-2xl font-semibold"></div>
+                  <div id="resto-secondary" class="text-gray-300 text-sm"></div>
+                </div>
+              </div>
             </div>
-            <div class="ml-4"><p class="text-gray-300 text-sm mb-2">Виж като</p><div class="flex rounded-lg bg-[#071023] p-1"><button id="seg-bgn" class="seg-btn py-1 px-3 text-sm rounded-md text-white active">BGN</button><button id="seg-eur" class="seg-btn py-1 px-3 text-sm rounded-md text-white ml-1">EUR</button></div></div>
+
+            <div class="ml-4">
+              <p class="text-gray-300 text-sm mb-2">Виж като</p>
+              <div class="flex rounded-lg bg-[#071023] p-1">
+                <button id="seg-bgn" class="seg-btn py-1 px-3 text-sm rounded-md text-white active">BGN</button>
+                <button id="seg-eur" class="seg-btn py-1 px-3 text-sm rounded-md text-white ml-1">EUR</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="mt-4 text-xs text-gray-400"><p>Курсът е фиксиран: <strong>1 EUR = 1.95583 BGN</strong></p></div>
+        <div class="mt-4 text-xs text-gray-400">
+          <p>Курсът е фиксиран: <strong>1 EUR = 1.95583 BGN</strong></p>
+        </div>
       </section>
 
-      <footer class="mt-6 pt-4 border-t border-white/6 flex items-center justify-between"><div class="text-sm text-gray-300">Курс: 1 EUR = 1.95583 BGN</div><div class="text-sm text-gray-400">Максим Георгиев ©</div></footer>
+      <footer class="mt-6 pt-4 border-t border-white/6 flex items-center justify-between">
+        <div class="text-sm text-gray-300">Курс: 1 EUR = 1.95583 BGN</div>
+        <div class="text-sm text-gray-400">Максим Георгиев ©</div>
+      </footer>
     </div>
   </main>
 
@@ -94,6 +157,7 @@
     const RATE = 1.95583;
     const nfBGN = new Intl.NumberFormat('bg-BG', { style:'currency', currency:'BGN', maximumFractionDigits:2 });
     const nfEUR = new Intl.NumberFormat('bg-BG', { style:'currency', currency:'EUR', maximumFractionDigits:2 });
+
     const amountEl = document.getElementById('amount');
     const amountCurEl = document.getElementById('amount-currency');
     const paidBGN = document.getElementById('paid-bgn');
@@ -105,22 +169,44 @@
     const segBGN = document.getElementById('seg-bgn');
     const segEUR = document.getElementById('seg-eur');
     const restoBox = document.getElementById('resto-box');
+
     let displayCurrency = 'BGN';
-    [amountEl, amountCurEl, paidBGN, paidEUR].forEach(el => { el.addEventListener('input', compute); el.addEventListener('change', compute); });
+
+    [amountEl, amountCurEl, paidBGN, paidEUR].forEach(el => {
+      el.addEventListener('input', compute);
+      el.addEventListener('change', compute);
+    });
+
     segBGN.addEventListener('click', () => { setDisplay('BGN'); });
     segEUR.addEventListener('click', () => { setDisplay('EUR'); });
-    function setDisplay(cur) { displayCurrency = cur; segBGN.classList.toggle('active', cur==='BGN'); segEUR.classList.toggle('active', cur==='EUR'); compute(); }
-    function toNumber(v) { if (v === undefined || v === null || v === '') return 0; const n = Number(String(v).replace(',', '.')); return isFinite(n) ? n : 0; }
+
+    function setDisplay(cur) {
+      displayCurrency = cur;
+      segBGN.classList.toggle('active', cur==='BGN');
+      segEUR.classList.toggle('active', cur==='EUR');
+      compute();
+    }
+
+    function toNumber(v) {
+      if (v === undefined || v === null || v === '') return 0;
+      const n = Number(String(v).replace(',', '.'));
+      return isFinite(n) ? n : 0;
+    }
+
     function compute() {
       const amountVal = toNumber(amountEl.value);
       const amountCur = amountCurEl.value || 'BGN';
       const amountInBGN = amountCur === 'EUR' ? (amountVal * RATE) : amountVal;
+
       const paidInBGNVal = toNumber(paidBGN.value);
       const paidInEURVal = toNumber(paidEUR.value);
+
       const paidTotalBGN = paidInBGNVal + paidInEURVal * RATE;
       const diff = +(paidTotalBGN - amountInBGN).toFixed(6);
+
       errorBox.classList.add('hidden');
       errorMsg.textContent = '';
+
       if (diff < -0.0005) {
         const need = Math.abs(diff);
         const needBGN = nfBGN.format(need);
@@ -133,9 +219,11 @@
         showResto(restoBGN);
       }
     }
+
     function showResto(restoBGN) {
       restoBox.style.animation = 'appearUp .28s ease forwards';
       setTimeout(()=> restoBox.style.animation = '', 300);
+
       if (displayCurrency === 'BGN') {
         restoAmount.textContent = nfBGN.format(restoBGN);
         const equiv = nfEUR.format(restoBGN / RATE);
@@ -147,12 +235,33 @@
         restoSecondary.textContent = `≈ ${equiv}`;
       }
     }
-    compute();
-    (function buildPattern() { const symbols = ['€', 'лв', '⃘', '⃝', '↔', '⌖']; const symbolsAlt = ['💶','💰','🧾','↩','➗','🔁']; const grid = document.querySelector('.pattern-grid'); const total = 36; for (let i=0;i<total;i++){ const cell = document.createElement('div'); cell.className = 'pattern-cell rounded-lg'; const r = Math.floor(i/6), c = i%6; const pick = ((r + c) % 2 === 0) ? symbols : symbolsAlt; const char = pick[(i) % pick.length]; const span = document.createElement('div'); span.className = 'symbol'; span.style.fontSize = (12 + (i % 3) * 3) + 'px'; span.textContent = char; span.style.animationDelay = `${(i % 6) * 0.12}s`; cell.appendChild(span); grid.appendChild(cell);} })();
 
-    // Register service worker (now a separate file at /sw.js)
+    compute();
+
+    (function buildPattern() {
+      const symbols = ['€', 'лв', '⃘', '⃝', '↔', '⌖'];
+      const symbolsAlt = ['💶','💰','🧾','↩','➗','🔁'];
+      const grid = document.querySelector('.pattern-grid');
+      const total = 36;
+      for (let i=0;i<total;i++){
+        const cell = document.createElement('div');
+        cell.className = 'pattern-cell rounded-lg';
+        const r = Math.floor(i/6), c = i%6;
+        const pick = ((r + c) % 2 === 0) ? symbols : symbolsAlt;
+        const char = pick[(i) % pick.length];
+        const span = document.createElement('div');
+        span.className = 'symbol';
+        span.style.fontSize = (12 + (i % 3) * 3) + 'px';
+        span.textContent = char;
+        span.style.animationDelay = `${(i % 6) * 0.12}s`;
+        cell.appendChild(span);
+        grid.appendChild(cell);
+      }
+    })();
+
+    // Register service worker (external file sw.js)
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(()=>{/*sw reg failed silently*/});
+      navigator.serviceWorker.register('/sw.js').catch(()=>{/* registration failed */});
     }
   </script>
 </body>
