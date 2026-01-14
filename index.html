@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Ресто Калькулатор" />
   <title>Ресто — Калкулатор</title>
 
-  <!-- Static manifest and iOS icon (relative paths to support GitHub Pages under a repo path) -->
+  <!-- Manifest & iOS icon (relative paths for GitHub Pages under repo path) -->
   <link rel="manifest" href="./manifest.json">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
   <meta name="mobile-web-app-capable" content="yes" />
@@ -19,6 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <!-- Tailwind CDN (warning in console is expected for CDN usage) -->
   <script>
     window.tailwind = {
       config: {
@@ -37,7 +38,7 @@
 
   <style>
     :root { --rate: 1.95583; }
-    html,body { height:100%; background: linear-gradient(180deg,#0f172a 0%, #020617 100%); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    html,body { height:100%; background: linear-gradient(180deg,#0f172a 0%, #020617 100%); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; margin:0; }
     .app-window { backdrop-filter: blur(8px) saturate(110%); -webkit-backdrop-filter: blur(8px) saturate(110%); }
     .card { border-radius:20px; box-shadow:0 18px 40px rgba(2,6,23,0.72), inset 0 1px 0 rgba(255,255,255,0.02); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006)); border:1px solid rgba(255,255,255,0.04); }
     @keyframes appearUp { from { opacity:0; transform: translateY(8px) scale(.995); } to { opacity:1; transform: translateY(0) scale(1); } }
@@ -53,12 +54,11 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-6">
 
-  <!-- Decorative pattern (chessboard) -->
+  <!-- Decorative pattern -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
     <div class="w-full h-full grid grid-cols-6 gap-6 p-8 pattern-grid"></div>
   </div>
 
-  <!-- App container -->
   <main class="relative w-full max-w-xl mx-auto">
     <div class="card app-window p-6 md:p-8">
       <header class="flex items-center gap-4 mb-4">
